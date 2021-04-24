@@ -3,12 +3,15 @@
  */
 package guru.springframework.spring5recipeapp.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -34,8 +37,25 @@ public class Recipe {
 	@Lob
 	private Byte[] image;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	private Set<Ingredients> ingredients;	
+		
 	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
+	
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	/**
 	 * @return the description
 	 */
@@ -143,5 +163,18 @@ public class Recipe {
 	 */
 	public void setNotes(Notes notes) {
 		this.notes = notes;
+	}
+	
+	/**
+	 * @return the ingredients
+	 */
+	public Set<Ingredients> getIngredients() {
+		return ingredients;
+	}
+	/**
+	 * @param ingredients the ingredients to set
+	 */
+	public void setIngredients(Set<Ingredients> ingredients) {
+		this.ingredients = ingredients;
 	}
 }
