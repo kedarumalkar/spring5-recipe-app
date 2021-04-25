@@ -3,6 +3,7 @@
  */
 package guru.springframework.spring5recipeapp.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,12 +31,16 @@ public class Recipe {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+
 	private String description;
+	
 	private Integer prepTime;
 	private Integer cookTime;
 	private Integer servings;
 	private String source;
 	private String url;
+	
+	@Lob
 	private String directions;
 	
 	//private Difficulty difficulty;
@@ -46,7 +51,7 @@ public class Recipe {
 	private Difficulty difficulty;
 		
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-	private Set<Ingredients> ingredients;	
+	private Set<Ingredient> ingredients = new HashSet<>();	
 		
 	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
@@ -55,7 +60,7 @@ public class Recipe {
 	@JoinTable(name="recipe_category", 
 			joinColumns = @JoinColumn(name= "recipe_id"), 
 			inverseJoinColumns = @JoinColumn(name="category_id"))
-	private Set<Category> categories;
+	private Set<Category> categories = new HashSet<>();
 	
 	/**
 	 * @return the id
@@ -196,13 +201,13 @@ public class Recipe {
 	/**
 	 * @return the ingredients
 	 */
-	public Set<Ingredients> getIngredients() {
+	public Set<Ingredient> getIngredients() {
 		return ingredients;
 	}
 	/**
 	 * @param ingredients the ingredients to set
 	 */
-	public void setIngredients(Set<Ingredients> ingredients) {
+	public void setIngredients(Set<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 	/**

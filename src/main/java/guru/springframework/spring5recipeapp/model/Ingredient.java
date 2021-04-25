@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
  *
  */
 @Entity
-public class Ingredients {
+public class Ingredient {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,5 +86,19 @@ public class Ingredients {
 	 */
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
+	}
+
+	/**
+	 * @return the uom
+	 */
+	public UnitOfMeasure getUom() {
+		return uom;
+	}
+
+	/**
+	 * @param uom the uom to set
+	 */
+	public void setUom(UnitOfMeasure uom) {
+		this.uom = uom;
 	}
 }
