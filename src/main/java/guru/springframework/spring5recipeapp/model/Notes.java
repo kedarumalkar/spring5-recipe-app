@@ -10,10 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * @author this pc
  *
  */
+@Data
+@EqualsAndHashCode(exclude = "recipe")
 @Entity
 public class Notes {
 
@@ -26,29 +31,4 @@ public class Notes {
 	
 	@OneToOne
 	private Recipe recipe;
-	
-	/**
-	 * @return the notes
-	 */
-	public String getNotes() {
-		return notes;
-	}
-	/**
-	 * @param notes the notes to set
-	 */
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-	/**
-	 * @return the recipe
-	 */
-	public Recipe getRecipe() {
-		return recipe;
-	}
-	/**
-	 * @param recipe the recipe to set
-	 */
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
 }

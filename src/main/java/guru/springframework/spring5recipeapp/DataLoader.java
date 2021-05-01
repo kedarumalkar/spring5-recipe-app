@@ -6,11 +6,13 @@ package guru.springframework.spring5recipeapp;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import guru.springframework.spring5recipeapp.model.Category;
 import guru.springframework.spring5recipeapp.model.Difficulty;
 import guru.springframework.spring5recipeapp.model.Ingredient;
 import guru.springframework.spring5recipeapp.model.Notes;
@@ -18,11 +20,13 @@ import guru.springframework.spring5recipeapp.model.Recipe;
 import guru.springframework.spring5recipeapp.repositories.CategoryRepository;
 import guru.springframework.spring5recipeapp.repositories.RecipeRepository;
 import guru.springframework.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author this pc
  *
  */
+@Slf4j
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	
@@ -45,6 +49,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		
+		log.debug("loading bootstrap data ...");
+		
 		List<Recipe> recipes = new ArrayList<>();
 		
 		recipes.add(createPerfectGaucamoleRecipe());
@@ -235,7 +242,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		spicyGrilledChickenTacos.getIngredients().add(lime);
 		
-		System.out.println("Spicy Grilled Chicken Tacos recipe created ...");
+		log.info("Spicy Grilled Chicken Tacos recipe created ...");
 		return spicyGrilledChickenTacos;
 	}
 
@@ -245,7 +252,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private Recipe createPerfectGaucamoleRecipe() {
 		Recipe perfectGuacamole = new Recipe();
 		
-		perfectGuacamole.getCategories().add(categoryRepository.findByCategoryName("American").get());		
+		Optional<Category> categoryOptional = categoryRepository.findByCategoryName("American");
+		
+		perfectGuacamole.getCategories().add(categoryOptional.get());		
 		perfectGuacamole.setCookTime(10);
 		perfectGuacamole.setDescription("How to Make Perfect Guacamole");
 		perfectGuacamole.setDifficulty(Difficulty.MODERATE);
@@ -343,7 +352,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		perfectGuacamole.getIngredients().add(tortillaChips);
 		
-		System.out.println("Perfect Guacamole recipe created ...");
+		log.info("Perfect Guacamole recipe created ...");
 		return perfectGuacamole;
 	}
 

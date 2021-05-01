@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 import guru.springframework.spring5recipeapp.model.Recipe;
 import guru.springframework.spring5recipeapp.repositories.RecipeRepository;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author this pc
  *
  */
+@Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
 	
@@ -29,6 +31,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public Set<Recipe> getAllRecipes() {		
+		log.debug("I'm in the service");
 		Set<Recipe> recipes = new HashSet<>();		
 		recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
 		return recipes;
