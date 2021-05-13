@@ -1,11 +1,78 @@
 <!DOCTYPE html>
 <html lang=en xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8"/>
-	<title>Recipe App</title>
-</head>
-<body>
-<h1>My Recipes!</h1>
 
+<head>
+	<meta charset="UTF-8" />
+	<title>Recipe App</title>
+
+	<!-- Bootstrap CSS -->
+	 <!-- Latest compiled and minified CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+          
+    <link th:rel='stylesheet' th:href="@{/webjars/jquery/1.11.1/jquery.min.js}">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+   
+	</head>
+
+<body>
+
+	<div class="container-fluid" style="margin-top : 20px">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">Simply Recipes!</h2>
+					</div>
+					<div class="panel-body">
+						<div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+							<table class="table table:hover">
+								<thead class="thread-inverse">
+									<tr>
+										<th>Id</th>
+										<th>Description</th>
+										<!--<th>Categories</th>-->
+										<th>Details</th>
+										<!--<th>Cook Time</th>
+										<th>Servings</th>-->
+										<!--<th>Directions</th>-->
+										<!--<th>Source</th>-->
+										<!--<th>URL</th>-->
+										<!--<th>Difficulty</th>-->
+										<!--<th>Ingredients</th>
+										<th>Notes</th>-->
+									</tr>
+								</thead>
+								<tr th:each="recipe : ${recipes}">
+									<td th:text="${recipe.id}"></td>
+									<td th:text="${recipe.description}"></td>
+									<!--<td>
+										<table>
+											<tr th:each="category : ${recipe.categories}">
+												<td th:text="${category.categoryName}"></td>
+											</tr>
+										</table>
+									</td>-->
+									<!--<td th:text="${recipe.prepTime}"></td>-->
+									<td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
+									<!--<td th:text="${recipe.cookTime}"></td>
+									<td th:text="${recipe.servings}"></td>-->
+									<!--<td th:text="${recipe.directions}"></td>-->
+									<!--<td th:text="${recipe.source}"></td>-->
+									<!--<td th:text="${recipe.url}"></td>-->
+									<!--<td th:text="${recipe.difficulty}"></td>-->
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>
