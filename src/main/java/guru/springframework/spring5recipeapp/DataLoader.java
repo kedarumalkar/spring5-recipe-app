@@ -64,7 +64,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	 * 
 	 */
 	private Recipe createSpicyGrilledChickenTacos() {
-		Recipe spicyGrilledChickenTacos = new Recipe();
+		Recipe spicyGrilledChickenTacos = Recipe.builder().build();
 		spicyGrilledChickenTacos.getCategories().add(categoryRepository.findByCategoryName("Mexican").get());
 		spicyGrilledChickenTacos.setCookTime(15);
 		spicyGrilledChickenTacos.setDescription("Spicy Grilled Chicken Tacos");
@@ -135,6 +135,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		cloveGarlic.setDescription("clove garlic, finely chopped");
 		cloveGarlic.setAmount(new BigDecimal(1));
 		cloveGarlic.setRecipe(spicyGrilledChickenTacos);
+		cloveGarlic.setUom(unitOfMeasureRepository.findByDescription("Each").get());
 		
 		spicyGrilledChickenTacos.getIngredients().add(cloveGarlic);
 		
@@ -174,6 +175,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		smallCornTortillas.setDescription("small corn tortillas");
 		smallCornTortillas.setAmount(new BigDecimal(8));
 		smallCornTortillas.setRecipe(spicyGrilledChickenTacos);
+		smallCornTortillas.setUom(unitOfMeasureRepository.findByDescription("Each").get());
 		
 		spicyGrilledChickenTacos.getIngredients().add(smallCornTortillas);
 		
@@ -189,6 +191,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		avocado.setDescription("medium ripe avocados, sliced");
 		avocado.setAmount(new BigDecimal(2));
 		avocado.setRecipe(spicyGrilledChickenTacos);
+		avocado.setUom(unitOfMeasureRepository.findByDescription("Each").get());
 		
 		spicyGrilledChickenTacos.getIngredients().add(avocado);
 		
@@ -196,6 +199,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		radish.setDescription("radishes, thinly sliced");
 		radish.setAmount(new BigDecimal(4));
 		radish.setRecipe(spicyGrilledChickenTacos);
+		radish.setUom(unitOfMeasureRepository.findByDescription("Each").get());
 		
 		spicyGrilledChickenTacos.getIngredients().add(radish);
 		
@@ -211,6 +215,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		redOnion.setDescription("red onion, thinly sliced");
 		redOnion.setAmount(new BigDecimal(0.5));
 		redOnion.setRecipe(spicyGrilledChickenTacos);
+		redOnion.setUom(unitOfMeasureRepository.findByDescription("Each").get());
 		
 		spicyGrilledChickenTacos.getIngredients().add(redOnion);
 		
@@ -250,11 +255,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	 * 
 	 */
 	private Recipe createPerfectGaucamoleRecipe() {
-		Recipe perfectGuacamole = new Recipe();
+		Recipe perfectGuacamole = Recipe.builder().build();
 		
-		Optional<Category> categoryOptional = categoryRepository.findByCategoryName("American");
+		Optional<Category> american = categoryRepository.findByCategoryName("American");
+		Optional<Category> mexican = categoryRepository.findByCategoryName("Mexican");
 		
-		perfectGuacamole.getCategories().add(categoryOptional.get());		
+		perfectGuacamole.getCategories().add(american.get());	
+		perfectGuacamole.getCategories().add(mexican.get());	
 		perfectGuacamole.setCookTime(10);
 		perfectGuacamole.setDescription("How to Make Perfect Guacamole");
 		perfectGuacamole.setDifficulty(Difficulty.MODERATE);

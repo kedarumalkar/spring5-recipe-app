@@ -20,8 +20,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * @author this pc
@@ -30,6 +33,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(exclude = {"ingredients", "notes"})
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Recipe {
 
 	@Id
@@ -55,12 +61,14 @@ public class Recipe {
 	@Enumerated(value = EnumType.STRING)
 	private Difficulty difficulty;
 		
+	@Builder.Default
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
 	private Set<Ingredient> ingredients = new HashSet<>();	
 		
 	@OneToOne(cascade = CascadeType.ALL)
 	private Notes notes;
 	
+	@Builder.Default
 	@ManyToMany
 	@JoinTable(name="recipe_category", 
 			joinColumns = @JoinColumn(name= "recipe_id"), 
