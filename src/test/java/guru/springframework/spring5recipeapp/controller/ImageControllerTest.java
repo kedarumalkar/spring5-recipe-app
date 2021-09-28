@@ -54,7 +54,9 @@ class ImageControllerTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(imageController)
+				.setControllerAdvice(new GlobalExceptionHandler())
+				.build();
 	}
 
 	/**
@@ -93,6 +95,17 @@ class ImageControllerTest {
                 .andExpect(header().string("Location", "/recipe/1/show"));
 
         verify(imageService, times(1)).saveImageFile(anyLong(), any());
+	}
+	
+	@Test
+	void testUploadImage_NumberFormatException() throws Exception {
+		MockMultipartFile multipartFile =
+                new MockMultipartFile("imagefile", "testing.txt", "text/plain",
+                        "Spring Framework Guru".getBytes());
+
+        mockMvc.perform(multipart("/recipe/one/image").file(multipartFile))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400BadRequest"));
 	}
 
 	@Test

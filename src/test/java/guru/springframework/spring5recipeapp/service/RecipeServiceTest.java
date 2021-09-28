@@ -5,6 +5,7 @@ package guru.springframework.spring5recipeapp.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
@@ -25,6 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import guru.springframework.spring5recipeapp.commands.RecipeCommand;
 import guru.springframework.spring5recipeapp.converters.RecipeToRecipeCommand;
+import guru.springframework.spring5recipeapp.exception.NotFoundException;
 import guru.springframework.spring5recipeapp.model.Recipe;
 import guru.springframework.spring5recipeapp.repositories.RecipeRepository;
 
@@ -121,5 +123,17 @@ class RecipeServiceTest {
 		
 		//then
 		verify(recipeRepository, times(1)).deleteById(anyLong());
+	}
+	
+	@Test
+	void testRecipeNotFound() {
+		Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+        	recipeService.findById(1L);
+        });
+        
+        assertEquals("Could not find a Recipe with ID : 1", exception.getMessage());
 	}
 }
